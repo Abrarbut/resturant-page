@@ -25,7 +25,7 @@
 //   displaySurname();
 // });
 
-let count = 0;
+let count = 10;
 
 function updatecounter() {
   document.getElementById("display").innerHTML = count;
@@ -37,7 +37,11 @@ function increment() {
 }
 
 function decrement() {
+  
   count--;
+  if (count < 0) {
+    count = 0;
+  }
   updatecounter();
 }
 function reset() {

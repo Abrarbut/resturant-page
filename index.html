@@ -5,11 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>restaurant</title>
 </head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    button {
+        margin: 5px;
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #display {
+        font-size: 24px;
+        margin: 20px 0;
+    }
+</style>
 <body>
+
 
 <h1>Welcome to our restaurant!</h1>
 <div>
-    <p id="display">0</p>
+    <p id="display">10</p>
     <button onclick="increment()">+</button>
     <button onclick="decrement()">-</button>
     <button onclick="reset()">reset</button>
