@@ -27,6 +27,9 @@
 
 let count = 10;
 
+
+load();
+
 function updatecounter() {
   document.getElementById("display").innerHTML = count;
 }
@@ -37,7 +40,7 @@ function increment() {
 }
 
 function decrement() {
-  
+
   count--;
   if (count < 0) {
     count = 0;
