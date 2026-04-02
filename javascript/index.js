@@ -27,9 +27,31 @@
 
 let count = 0;
 
-
+function updatecounter() {
+  document.getElementById("display").innerHTML = count;
+}
 
 function increment() {
   count++;
-  document.getElementById("counter").textContent = count;
+  updatecounter();
+}
+
+function decrement() {
+  count--;
+  updatecounter();
+}
+function reset() {
+  count = 0;
+  updatecounter();
+}
+function save() {
+
+}
+
+function load() {
+  let saved = loadstorage.getItem("count");
+  if (saved !== null) {
+    count = Number(saved);
+  }
+  updateCount();
 }
