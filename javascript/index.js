@@ -1,3 +1,6 @@
+const userInput = document.getElementById("nameInput");
+const surnameDisplay = document.getElementById("surnameDisplay");
+
 let user = {
   name: "John",
   surname: "Smith",
@@ -5,9 +8,19 @@ let user = {
   get fullName() {
     return `${this.name} ${this.surname}`;
   },
+
   set fullName(value) {
-    [this.name, this.surname] = value.split(" ");
+    const parts = value.split(" ");
+    this.name = parts[0] || "";
+    this.surname = parts[1] || "";
   }
 };
 
-console.log(user.fullName); 
+function displaySurname() {
+  surnameDisplay.textContent = user.surname;
+}
+
+userInput.addEventListener("input", (event) => {
+  user.fullName = event.target.value;
+  displaySurname(); // 👈 important
+});
