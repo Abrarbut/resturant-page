@@ -4,8 +4,10 @@ let user = {
 
   get fullName() {
     return `${this.name} ${this.surname}`;
-  }
+  },
   set fullName(value) {
+    [this.name, this.surname] = value.split(" ");
+  }
 };
 
 console.log(user.fullName); 
