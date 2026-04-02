@@ -48,7 +48,7 @@ function decrement() {
   updatecounter();
 }
 function reset() {
-  count = 0;
+  count = 10;
   updatecounter();
 }
 function save() {
