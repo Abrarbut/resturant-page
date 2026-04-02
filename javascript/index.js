@@ -17,10 +17,10 @@ let user = {
 };
 
 function displaySurname() {
-  surnameDisplay.textContent = user.surname;
+  surnameDisplay.textContent = user.fullName;
 }
 
 userInput.addEventListener("input", (event) => {
   user.fullName = event.target.value;
-  displaySurname(); // 👈 important
+  displaySurname();
 });
