@@ -45,13 +45,13 @@ function reset() {
   updatecounter();
 }
 function save() {
-
+  localStorage.setItem("count", count);
 }
 
 function load() {
-  let saved = loadstorage.getItem("count");
+  let saved = localStorage.getItem("count");
   if (saved !== null) {
     count = Number(saved);
   }
-  updateCount();
+  updatecounter();
 }
