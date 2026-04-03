@@ -1,25 +1,38 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-
+  // array for task list
+  const taskList = [];
+  
   const addButton = document.getElementById("addButton");
   const clearButton = document.getElementById("clearButton");
   const userInput = document.getElementById("userInput");
 
-  addButton.addEventListener("click", function() {
-    const taskText = userInput.value.trim();
-    if (taskText !== "") {
-      const taskItem = document.createElement("li");
-      taskItem.textContent = taskText;
-      document.getElementById("taskList").appendChild(taskItem);
-      userInput.value = "";
-    }
-  });
+  
+  
+  function displayTasks() {
+    let html = "";
+    taskList.forEach(function(task) {
+      html += `<li>${task}</li>`;
+    });
+    document.getElementById("taskList").innerHTML = html;
+  }
 
-  clearButton.addEventListener("click", function() {
-    document.getElementById("taskList").innerHTML = "";
-  });
-
-
+  function addTask() {
+  let taskInput = document.getElementById("task");
+  let text = taskInput.value;
+  if (text === "") {
+    return;
+  }
+  tasks.push(text);
+  taskInput.value = "";
+  saveTasks();
+  displayTasks();
+}
+function removeTask(i) {
+  tasks.splice(i, 1);
+  saveTasks();
+  displayTasks();
+}
 
 
 
