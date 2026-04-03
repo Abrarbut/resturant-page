@@ -9,6 +9,11 @@ function displayTasks() {
   }
   document.getElementById("list").innerHTML = html;
 }
+function addTaskOnEnter(event) {
+  if (event.key === "Enter") {
+    addTask();
+  }
+}
 
 // Function to Add a task
 function addTask() {
@@ -52,4 +57,5 @@ function loadTasks() {
 
 // Load and display tasks when page loads
 loadTasks();
-displayTasks()
+displayTasks();
+document.getElementById("task").addEventListener("keypress", addTaskOnEnter);
