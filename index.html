@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
-</head>
+<html>
 <body>
-    
-    <h1>To Do List</h1>
-    <input type="text" id="userInput" placeholder="New task">
-    <button id="addButton">Add</button>
-    <br>
-    <button id="clearButton">Clear All</button>
-    <script src="javascript/index.js"></script>
+<h2>To-Do List</h2>
+
+<input id="task" placeholder="New task">
+<button onclick="addTask()">Add</button>
+<ul id="list"></ul>
+<button onclick="clearAll()">Clear All</button>
+
+<script>
+let tasks = [];
+</script>
+
 </body>
 </html>
