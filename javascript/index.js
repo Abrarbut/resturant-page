@@ -41,6 +41,12 @@ function removeTask(i) {
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+function loadTasks() {
+  let saved = localStorage.getItem("tasks");
+  if (saved !== null) {
+    tasks = JSON.parse(saved);
+  }
+}
 
 
 
