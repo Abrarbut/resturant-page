@@ -33,7 +33,14 @@ function removeTask(i) {
   saveTasks();
   displayTasks();
 }
-
+function removeTask(i) {
+  tasks.splice(i, 1);
+  saveTasks();
+  displayTasks();
+}
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 
 
