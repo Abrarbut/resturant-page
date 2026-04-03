@@ -58,4 +58,5 @@ function loadTasks() {
 // Load and display tasks when page loads
 loadTasks();
 displayTasks();
+saveTasks();
 document.getElementById("task").addEventListener("keypress", addTaskOnEnter);
