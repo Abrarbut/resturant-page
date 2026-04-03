@@ -15,7 +15,7 @@ function addTask() {
   let taskInput = document.getElementById("task");
   let text = taskInput.value;
   if (text === "") {
-    return;
+    return alert("Please enter a task.");
   }
   tasks.push(text);
   taskInput.value = "";
