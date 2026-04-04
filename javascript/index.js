@@ -54,9 +54,20 @@ function loadTasks() {
     tasks = JSON.parse(saved);
   }
 }
-
+function displaysavemessage() {
+  let message = document.getElementById("message");
+  message.style.display = "block";
+  setTimeout(function() {
+    message.style.display = "none";
+  }, 2000);
+}
 // Load and display tasks when page loads
 loadTasks();
 displayTasks();
 saveTasks();
+
 document.getElementById("task").addEventListener("keypress", addTaskOnEnter);
+
+document.getElementById("add").addEventListener("click", addTask);
+
+document.getElementById("clear").addEventListener("click", clearAll);
