@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html>
 <style>
-/* The overlay (background) */
-.modal-overlay {
-  display: none;
+/* Simple modal styles matching the markup below */
+.hidden { display: none; }
+
+/* overlay covers the viewport and sits behind the dialog */
+#modal .overlay {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0,0,0,0.5);
 }
 
-/* Show the modal */
-.modal-overlay.show {
-  display: block;
-}
-
-/* The modal box */
-.modal-box {
-  background: white;
+#modal .dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 18px;
+  border-radius: 8px;
   width: 90%;
-  max-width: 400px;
-  margin: 100px auto;
-  padding: 20px;
-  border-radius: 10px;
-  position: relative;
+  max-width: 420px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  z-index: 1001;
 }
 
-/* Close button */
+/* close button (x) */
 .modal-close {
   position: absolute;
-  right: 12px;
-  top: 8px;
-  font-size: 24px;
+  right: 10px;
+  top: 6px;
+  font-size: 20px;
+  background: transparent;
   border: none;
-  background: none;
   cursor: pointer;
 }
+
+/* ensure overlay is behind dialog */
+#modal { z-index: 1000; }
 </style>
 <body>
     <!-- <h2>To-Do List</h2>
@@ -58,14 +58,17 @@
     <h2>Modal Popup</h2>
     <button id="openBtn">Open Modal</button>
 
-    <div id="modal" class="hidden">
-        <div class="overlay"></div>
-        <div class="dialog">
-            <p id="modalText">Message here</p>
-            <button id="modalOk">OK</button>
-            <button id="modalCancel">Cancel</button>
-        </div>
+  <div id="modal" class="hidden" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="overlay" data-close="overlay"></div>
+    <div class="dialog">
+      <button id="modalClose" class="modal-close" aria-label="Close">×</button>
+      <p id="modalText">Message here</p>
+      <div style="margin-top:12px;text-align:right;">
+        <button id="modalOk">OK</button>
+        <button id="modalCancel">Cancel</button>
+      </div>
     </div>
+  </div>
     <script src="javascript/index.js"></script>
 
 </body>

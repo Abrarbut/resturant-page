@@ -6,10 +6,40 @@ document.getElementById('modalCancel').addEventListener('click', hideModal);
 function showModal(message) {
   modalText.textContent = message;
   modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+  // move focus to close for keyboard users
+  const closeBtn = document.getElementById('modalClose');
+  if (closeBtn) closeBtn.focus();
 }
 function hideModal() {
   modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
 }
+
+// Wire modal controls: open button, close (x), overlay click, OK/Cancel, Escape key
+(function wireModal() {
+  const openBtn = document.getElementById('openBtn');
+  const closeBtn = document.getElementById('modalClose');
+  const okBtn = document.getElementById('modalOk');
+  const cancelBtn = document.getElementById('modalCancel');
+  const overlay = modal ? modal.querySelector('.overlay') : null;
+
+  if (openBtn) openBtn.addEventListener('click', () => showModal('This is a modal popup. Click outside, press Escape, or use the × to close.'));
+  if (closeBtn) closeBtn.addEventListener('click', hideModal);
+  if (okBtn) okBtn.addEventListener('click', () => { /* user confirmed */ hideModal(); });
+  if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
+  if (overlay) overlay.addEventListener('click', (e) => {
+    // click on overlay (outside dialog) closes the modal
+    hideModal();
+  });
+
+  // close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+      hideModal();
+    }
+  });
+})();
 
 // // tasks are objects: { text: string, done: boolean }
 // let tasks = [];
