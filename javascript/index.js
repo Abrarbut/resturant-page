@@ -1,8 +1,14 @@
-const modal = document.getElementById('myModal');
+const modal = document.getElementById('modal');
+const modalText = document.getElementById('modalText');
+document.getElementById('modalOk').addEventListener('click', () => { /* handle ok */ hideModal(); });
+document.getElementById('modalCancel').addEventListener('click', hideModal);
 
-function openModal() {
-  modal.style.display = 'block';
-  popu
+function showModal(message) {
+  modalText.textContent = message;
+  modal.classList.remove('hidden');
+}
+function hideModal() {
+  modal.classList.add('hidden');
 }
 
 // // tasks are objects: { text: string, done: boolean }
