@@ -164,3 +164,12 @@ function hideModal() {
 //   // default filter button visual
 //   setFilter('all');
 // });
+
+Swal.fire('Hello world');
+Swal.fire({
+  title: 'Are you sure?',
+  showCancelButton: true,
+  confirmButtonText: 'Yes'
+}).then(result => {
+  if (result.isConfirmed) { /* ... */ }
+});
