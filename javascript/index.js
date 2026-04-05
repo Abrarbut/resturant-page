@@ -1,154 +1,160 @@
+const modal = document.getElementById('myModal');
 
-// tasks are objects: { text: string, done: boolean }
-let tasks = [];
-let currentFilter = 'all'; // 'all' | 'active' | 'done'
-
-function escapeHtml(str) {
-  return str.replace(/[&"'<>]/g, function (m) {
-    return ({
-      '&': '&amp;',
-      '"': '&quot;',
-      "'": '&#39;',
-      '<': '&lt;',
-      '>': '&gt;'
-    })[m];
-  });
+function openModal() {
+  modal.style.display = 'block';
+  popu
 }
 
-function displayTasks() {
-  const list = document.getElementById('list');
-  let html = '';
-  for (let i = 0; i < tasks.length; i++) {
-    const t = tasks[i];
-    if (currentFilter === 'active' && t.done) continue;
-    if (currentFilter === 'done' && !t.done) continue;
+// // tasks are objects: { text: string, done: boolean }
+// let tasks = [];
+// let currentFilter = 'all'; // 'all' | 'active' | 'done'
 
-    const checked = t.done ? 'checked' : '';
-    const style = t.done ? 'text-decoration:line-through;color:#666;' : '';
+// function escapeHtml(str) {
+//   return str.replace(/[&"'<>]/g, function (m) {
+//     return ({
+//       '&': '&amp;',
+//       '"': '&quot;',
+//       "'": '&#39;',
+//       '<': '&lt;',
+//       '>': '&gt;'
+//     })[m];
+//   });
+// }
 
-    html += `<li>`;
-    html += `<input type="checkbox" ${checked} onclick="toggleDone(${i})"> `;
-    html += `<span style="${style}">${escapeHtml(t.text)}</span> `;
-    html += `<button onclick="editTask(${i})">Edit</button> `;
-    html += `<button onclick="removeTask(${i})">x</button>`;
-    html += `</li>`;
-  }
-  list.innerHTML = html;
-}
+// function displayTasks() {
+//   const list = document.getElementById('list');
+//   let html = '';
+//   for (let i = 0; i < tasks.length; i++) {
+//     const t = tasks[i];
+//     if (currentFilter === 'active' && t.done) continue;
+//     if (currentFilter === 'done' && !t.done) continue;
 
-function addTaskOnEnter(event) {
-  if (event.key === 'Enter') addTask();
-}
+//     const checked = t.done ? 'checked' : '';
+//     const style = t.done ? 'text-decoration:line-through;color:#666;' : '';
 
-function addTask() {
-  const taskInput = document.getElementById('task');
-  const text = taskInput.value.trim();
-  if (text === '') return alert('Please enter a task.');
-  tasks.push({ text, done: false });
-  taskInput.value = '';
-  saveTasks();
-  displayTasks();
-}
+//     html += `<li>`;
+//     html += `<input type="checkbox" ${checked} onclick="toggleDone(${i})"> `;
+//     html += `<span style="${style}">${escapeHtml(t.text)}</span> `;
+//     html += `<button onclick="editTask(${i})">Edit</button> `;
+//     html += `<button onclick="removeTask(${i})">x</button>`;
+//     html += `</li>`;
+//   }
+//   list.innerHTML = html;
+// }
 
-function removeTask(i) {
-  if (i < 0 || i >= tasks.length) return;
-  tasks.splice(i, 1);
-  saveTasks();
-  displayTasks();
-}
+// function addTaskOnEnter(event) {
+//   if (event.key === 'Enter') addTask();
+// }
 
-function clearAll() {
-  tasks = [];
-  saveTasks();
-  displayTasks();
-}
+// function addTask() {
+//   const taskInput = document.getElementById('task');
+//   const text = taskInput.value.trim();
+//   if (text === '') return alert('Please enter a task.');
+//   tasks.push({ text, done: false });
+//   taskInput.value = '';
+//   saveTasks();
+//   displayTasks();
+// }
 
-function toggleDone(i) {
-  if (i < 0 || i >= tasks.length) return;
-  tasks[i].done = !tasks[i].done;
-  saveTasks();
-  displayTasks();
-}
+// function removeTask(i) {
+//   if (i < 0 || i >= tasks.length) return;
+//   tasks.splice(i, 1);
+//   saveTasks();
+//   displayTasks();
+// }
 
-function editTask(i) {
-  if (i < 0 || i >= tasks.length) return;
-  const newText = prompt('Edit task', tasks[i].text);
-  if (newText === null) return; // cancelled
-  const trimmed = newText.trim();
-  if (trimmed === '') return alert('Task cannot be empty.');
-  tasks[i].text = trimmed;
-  saveTasks();
-  displayTasks();
-}
+// function clearAll() {
+//   tasks = [];
+//   saveTasks();
+//   displayTasks();
+// }
 
-function saveTasks() {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-  displaysavemessage();
-}
+// function toggleDone(i) {
+//   if (i < 0 || i >= tasks.length) return;
+//   tasks[i].done = !tasks[i].done;
+//   saveTasks();
+//   displayTasks();
+// }
 
-function loadTasks() {
-  const saved = localStorage.getItem('tasks');
-  if (saved !== null) {
-    try {
-      const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed)) {
-        // normalize shape
-        tasks = parsed.map(item => {
-          if (typeof item === 'string') return { text: item, done: false };
-          return { text: String(item.text || ''), done: Boolean(item.done) };
-        });
-      }
-    } catch (e) {
-      // corrupted data: ignore
-      tasks = [];
-    }
-  }
-}
+// function editTask(i) {
+//   if (i < 0 || i >= tasks.length) return;
+//   const newText = prompt('Edit task', tasks[i].text);
+//   if (newText === null) return; // cancelled
+//   const trimmed = newText.trim();
+//   if (trimmed === '') return alert('Task cannot be empty.');
+//   tasks[i].text = trimmed;
+//   saveTasks();
+//   displayTasks();
+// }
 
-function displaysavemessage() {
-  const message = document.getElementById('message');
-  if (!message) return;
-  message.style.display = 'block';
-  setTimeout(() => { message.style.display = 'none'; }, 1500);
-}
+// function saveTasks() {
+//   localStorage.setItem('tasks', JSON.stringify(tasks));
+//   displaysavemessage();
+// }
 
-function setFilter(f) {
-  currentFilter = f;
-  // visual feedback for active filter buttons
-  document.querySelectorAll('.filter-btn').forEach(btn => btn.style.fontWeight = 'normal');
-  const id = f === 'all' ? 'filter-all' : (f === 'active' ? 'filter-active' : 'filter-done');
-  const el = document.getElementById(id);
-  if (el) el.style.fontWeight = '700';
-  displayTasks();
-}
+// function loadTasks() {
+//   const saved = localStorage.getItem('tasks');
+//   if (saved !== null) {
+//     try {
+//       const parsed = JSON.parse(saved);
+//       if (Array.isArray(parsed)) {
+//         // normalize shape
+//         tasks = parsed.map(item => {
+//           if (typeof item === 'string') return { text: item, done: false };
+//           return { text: String(item.text || ''), done: Boolean(item.done) };
+//         });
+//       }
+//     } catch (e) {
+//       // corrupted data: ignore
+//       tasks = [];
+//     }
+//   }
+// }
 
-function sortTasks() {
-  tasks.sort((a, b) => a.text.localeCompare(b.text, undefined, { sensitivity: 'base' }));
-  saveTasks();
-  displayTasks();
-}
+// function displaysavemessage() {
+//   const message = document.getElementById('message');
+//   if (!message) return;
+//   message.style.display = 'block';
+//   setTimeout(() => { message.style.display = 'none'; }, 1500);
+// }
 
-// Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
-  loadTasks();
-  displayTasks();
+// function setFilter(f) {
+//   currentFilter = f;
+//   // visual feedback for active filter buttons
+//   document.querySelectorAll('.filter-btn').forEach(btn => btn.style.fontWeight = 'normal');
+//   const id = f === 'all' ? 'filter-all' : (f === 'active' ? 'filter-active' : 'filter-done');
+//   const el = document.getElementById(id);
+//   if (el) el.style.fontWeight = '700';
+//   displayTasks();
+// }
 
-  const taskInput = document.getElementById('task');
-  if (taskInput) taskInput.addEventListener('keypress', addTaskOnEnter);
+// function sortTasks() {
+//   tasks.sort((a, b) => a.text.localeCompare(b.text, undefined, { sensitivity: 'base' }));
+//   saveTasks();
+//   displayTasks();
+// }
 
-  const addBtn = document.getElementById('add');
-  if (addBtn) addBtn.addEventListener('click', addTask);
+// // Initialize on DOM ready
+// document.addEventListener('DOMContentLoaded', () => {
+//   loadTasks();
+//   displayTasks();
 
-  const clearBtn = document.getElementById('clear');
-  if (clearBtn) clearBtn.addEventListener('click', clearAll);
+//   const taskInput = document.getElementById('task');
+//   if (taskInput) taskInput.addEventListener('keypress', addTaskOnEnter);
 
-  const sortBtn = document.getElementById('sort');
-  if (sortBtn) sortBtn.addEventListener('click', sortTasks);
+//   const addBtn = document.getElementById('add');
+//   if (addBtn) addBtn.addEventListener('click', addTask);
 
-  document.getElementById('filter-all').addEventListener('click', () => setFilter('all'));
-  document.getElementById('filter-active').addEventListener('click', () => setFilter('active'));
-  document.getElementById('filter-done').addEventListener('click', () => setFilter('done'));
+//   const clearBtn = document.getElementById('clear');
+//   if (clearBtn) clearBtn.addEventListener('click', clearAll);
 
-  // default filter button visual
-  setFilter('all');
-});
+//   const sortBtn = document.getElementById('sort');
+//   if (sortBtn) sortBtn.addEventListener('click', sortTasks);
+
+//   document.getElementById('filter-all').addEventListener('click', () => setFilter('all'));
+//   document.getElementById('filter-active').addEventListener('click', () => setFilter('active'));
+//   document.getElementById('filter-done').addEventListener('click', () => setFilter('done'));
+
+//   // default filter button visual
+//   setFilter('all');
+// });
