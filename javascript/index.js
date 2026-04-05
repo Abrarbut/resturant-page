@@ -45,6 +45,7 @@ function clearAll() {
 // Function to Save tasks
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
+  displaysavemessage();
 }
 
 // Function to Load tasks
@@ -59,12 +60,13 @@ function displaysavemessage() {
   message.style.display = "block";
   setTimeout(function() {
     message.style.display = "none";
-  }, 2000);
+  }, 3000);
 }
 // Load and display tasks when page loads
+saveTasks();
 loadTasks();
 displayTasks();
-saveTasks();
+
 
 document.getElementById("task").addEventListener("keypress", addTaskOnEnter);
 
