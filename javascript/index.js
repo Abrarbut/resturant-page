@@ -1,75 +1,154 @@
+
+// tasks are objects: { text: string, done: boolean }
 let tasks = [];
-let count = 1;
-// Function to Display tasks
-function displayTasks() {
-  let html = "";
-  for (let i = 0; i < tasks.length; i++) {
-    html += "<li>" + tasks[i] +
-    " <button onclick='removeTask(" + i + ")'>x</button></li>";
-  }
-  document.getElementById("list").innerHTML = html;
-}
-function addTaskOnEnter(event) {
-  if (event.key === "Enter") {
-    addTask();
-  }
+let currentFilter = 'all'; // 'all' | 'active' | 'done'
+
+function escapeHtml(str) {
+  return str.replace(/[&"'<>]/g, function (m) {
+    return ({
+      '&': '&amp;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '<': '&lt;',
+      '>': '&gt;'
+    })[m];
+  });
 }
 
-// Function to Add a task
-function addTask() {
-  let taskInput = document.getElementById("task");
-  let text = taskInput.value;
-  if (text === "") {
-    return alert("Please enter a task.");
+function displayTasks() {
+  const list = document.getElementById('list');
+  let html = '';
+  for (let i = 0; i < tasks.length; i++) {
+    const t = tasks[i];
+    if (currentFilter === 'active' && t.done) continue;
+    if (currentFilter === 'done' && !t.done) continue;
+
+    const checked = t.done ? 'checked' : '';
+    const style = t.done ? 'text-decoration:line-through;color:#666;' : '';
+
+    html += `<li>`;
+    html += `<input type="checkbox" ${checked} onclick="toggleDone(${i})"> `;
+    html += `<span style="${style}">${escapeHtml(t.text)}</span> `;
+    html += `<button onclick="editTask(${i})">Edit</button> `;
+    html += `<button onclick="removeTask(${i})">x</button>`;
+    html += `</li>`;
   }
-  tasks.push(text);
-  taskInput.value = "";
+  list.innerHTML = html;
+}
+
+function addTaskOnEnter(event) {
+  if (event.key === 'Enter') addTask();
+}
+
+function addTask() {
+  const taskInput = document.getElementById('task');
+  const text = taskInput.value.trim();
+  if (text === '') return alert('Please enter a task.');
+  tasks.push({ text, done: false });
+  taskInput.value = '';
   saveTasks();
   displayTasks();
 }
 
-// Function to Remove a task
 function removeTask(i) {
+  if (i < 0 || i >= tasks.length) return;
   tasks.splice(i, 1);
   saveTasks();
   displayTasks();
 }
 
-// Function to Clear all tasks
 function clearAll() {
   tasks = [];
   saveTasks();
   displayTasks();
 }
 
-// Function to Save tasks
+function toggleDone(i) {
+  if (i < 0 || i >= tasks.length) return;
+  tasks[i].done = !tasks[i].done;
+  saveTasks();
+  displayTasks();
+}
+
+function editTask(i) {
+  if (i < 0 || i >= tasks.length) return;
+  const newText = prompt('Edit task', tasks[i].text);
+  if (newText === null) return; // cancelled
+  const trimmed = newText.trim();
+  if (trimmed === '') return alert('Task cannot be empty.');
+  tasks[i].text = trimmed;
+  saveTasks();
+  displayTasks();
+}
+
 function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  localStorage.setItem('tasks', JSON.stringify(tasks));
   displaysavemessage();
 }
 
-// Function to Load tasks
 function loadTasks() {
-  let saved = localStorage.getItem("tasks");
+  const saved = localStorage.getItem('tasks');
   if (saved !== null) {
-    tasks = JSON.parse(saved);
+    try {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        // normalize shape
+        tasks = parsed.map(item => {
+          if (typeof item === 'string') return { text: item, done: false };
+          return { text: String(item.text || ''), done: Boolean(item.done) };
+        });
+      }
+    } catch (e) {
+      // corrupted data: ignore
+      tasks = [];
+    }
   }
 }
+
 function displaysavemessage() {
-  let message = document.getElementById("message");
-  message.style.display = "block";
-  setTimeout(function() {
-    message.style.display = "none";
-  }, 3000);
+  const message = document.getElementById('message');
+  if (!message) return;
+  message.style.display = 'block';
+  setTimeout(() => { message.style.display = 'none'; }, 1500);
 }
-// Load and display tasks when page loads
-saveTasks();
-loadTasks();
-displayTasks();
 
+function setFilter(f) {
+  currentFilter = f;
+  // visual feedback for active filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.style.fontWeight = 'normal');
+  const id = f === 'all' ? 'filter-all' : (f === 'active' ? 'filter-active' : 'filter-done');
+  const el = document.getElementById(id);
+  if (el) el.style.fontWeight = '700';
+  displayTasks();
+}
 
-document.getElementById("task").addEventListener("keypress", addTaskOnEnter);
+function sortTasks() {
+  tasks.sort((a, b) => a.text.localeCompare(b.text, undefined, { sensitivity: 'base' }));
+  saveTasks();
+  displayTasks();
+}
 
-document.getElementById("add").addEventListener("click", addTask);
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  loadTasks();
+  displayTasks();
 
-document.getElementById("clear").addEventListener("click", clearAll);
+  const taskInput = document.getElementById('task');
+  if (taskInput) taskInput.addEventListener('keypress', addTaskOnEnter);
+
+  const addBtn = document.getElementById('add');
+  if (addBtn) addBtn.addEventListener('click', addTask);
+
+  const clearBtn = document.getElementById('clear');
+  if (clearBtn) clearBtn.addEventListener('click', clearAll);
+
+  const sortBtn = document.getElementById('sort');
+  if (sortBtn) sortBtn.addEventListener('click', sortTasks);
+
+  document.getElementById('filter-all').addEventListener('click', () => setFilter('all'));
+  document.getElementById('filter-active').addEventListener('click', () => setFilter('active'));
+  document.getElementById('filter-done').addEventListener('click', () => setFilter('done'));
+
+  // default filter button visual
+  setFilter('all');
+});
