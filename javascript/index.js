@@ -1,5 +1,5 @@
 let tasks = [];
-
+let count = 1;
 // Function to Display tasks
 function displayTasks() {
   let html = "";

@@ -4,9 +4,17 @@
 <h2>To-Do List</h2>
 
 <input id="task" placeholder="New task">
-<button onclick="addTask()">Add</button>
+<button id="add">Add</button>
+<button id="sort">Sort A→Z</button>
+
+<div style="margin-top:8px;">
+	<button id="filter-all" class="filter-btn">All</button>
+	<button id="filter-active" class="filter-btn">Active</button>
+	<button id="filter-done" class="filter-btn">Done</button>
+</div>
+
 <ul id="list"></ul>
-<button onclick="clearAll()">Clear All</button>
+<button id="clear">Clear All</button>
 <div id="message" style="display:none;">Task saved!</div>
 
 <script src="javascript/index.js"></script>
