@@ -1,76 +1,12 @@
 <!DOCTYPE html>
-<html>
-<style>
-/* Simple modal styles matching the markup below */
-.hidden { display: none; }
-
-/* overlay covers the viewport and sits behind the dialog */
-#modal .overlay {
-  position: fixed;
-  inset: 0; /* top:0; right:0; bottom:0; left:0 */
-  background: rgba(0,0,0,0.5);
-}
-
-#modal .dialog {
-  position:absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  padding: 18px;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 420px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  z-index: 1001;
-}
-
-/* close button (x) */
-.modal-close {
-  position: absolute;
-  right: 10px;
-  top: 6px;
-  font-size: 20px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-/* ensure overlay is behind dialog */
-#modal { z-index: 1000; }
-</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 <body>
-    <!-- <h2>To-Do List</h2>
-
-    <input id="task" placeholder="New task">
-    <button id="add">Add</button>
-    <button id="sort">Sort A→Z</button>
-
-    <div style="margin-top:8px;">
-        <button id="filter-all" class="filter-btn">All</button>
-        <button id="filter-active" class="filter-btn">Active</button>
-        <button id="filter-done" class="filter-btn">Done</button>
-    </div>
-
-    <ul id="list"></ul>
-    <button id="clear">Clear All</button>
-    <div id="message" style="display:none;">Task saved!</div> -->
-    <h2>Modal Popup</h2>
-    <button id="openBtn">Open Modal</button>
-
-  <div id="modal" class="hidden" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="overlay" data-close="overlay"></div>
-    <div class="dialog">
-      <button id="modalClose" class="modal-close" aria-label="Close">×</button>
-      <p id="modalText">Message here</p>
-      <div style="margin-top:12px;text-align:right;">
-        <button id="modalOk">OK</button>
-        <button id="modalCancel">Cancel</button>
-      </div>
-    </div>
-  </div>
     <script src="javascript/index.js"></script>
-
+    <script src="javascript/index2.js"></script>
 </body>
-
 </html>
