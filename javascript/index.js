@@ -1,1 +1,0 @@
-const greeting = "Hello, welcome to our restaurant!";
