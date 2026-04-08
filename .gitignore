@@ -1,2 +1,15 @@
 webpack-practice/node_modules/
 .env
+node_modules/
+dist/
+build/
+*.log
+*.env
+.DS_Store
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
