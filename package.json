@@ -1,25 +1,23 @@
 {
   "name": "restaurant_page",
-  "version": "1.0.0",page",
-  "description": "A restaurant website with tabbed navigation",,
+  "version": "1.0.0",
+  "description": "A restaurant website with tabbed navigation",
   "main": "index.js",
-  "scripts": {ex.js",
+  "scripts": {
     "build": "webpack",
-    "serve": "webpack serve","test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "webpack serve",
     "deploy": "webpack && git add dist -f && git commit -m 'Deployment commit' && git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [],
-  "author": "","url": "git+https://github.com/Abrarbut/resturant-page.git"
+  "author": "",
   "license": "ISC",
-  "devDependencies": {],
-    "html-loader": "^1.3.0",
-    "html-webpack-plugin": "^5.6.0",: "ISC",
-    "css-loader": "^6.8.1",
-    "style-loader": "^3.3.4","url": "https://github.com/Abrarbut/resturant-page/issues"
-    "webpack": "^5.106.0",
-    "webpack-cli": "^5.1.4", "homepage": "https://github.com/Abrarbut/resturant-page#readme"
-    "webpack-dev-server": "^4.21.0"}
-
-
-
-}  }
+  "devDependencies": {
+    "css-loader": "^7.1.4",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.6",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.106.1",
+    "webpack-cli": "^7.0.2",
+    "webpack-dev-server": "^5.2.3"
+  }
+}
