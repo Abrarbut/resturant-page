@@ -24,6 +24,12 @@ export default {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      // webpack.config.js
+      {
+        test: /\.html$/i,
+        use: ["html-loader"],
+      }
+
     ],
   },
 };
